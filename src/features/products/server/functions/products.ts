@@ -132,6 +132,16 @@ export const getProductByIdFn = createServerFn({ method: "GET" })
     return result;
   });
 
+export const getProductBySlugFn = createServerFn({ method: "GET" })
+  .validator(z.string())
+  .handler(async ({ data }) => {
+    const result = await getProductBasicQuery()
+      .where("p.slug", "=", data)
+      .executeTakeFirst();
+
+    return result;
+  });
+
 export const getAllProductsFn = createServerFn({ method: "GET" })
   .validator(getAllProductsSchema)
   .handler(async ({ data }) => {

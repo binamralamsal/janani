@@ -60,12 +60,23 @@ export function PriceRangeFilter() {
   });
 
   const updateURLWithPriceRange = useCallback(
-    (updatedPriceRange: number[]) => {
+    (updatedPriceRange: [number, number]) => {
       if (updatedPriceRange.length !== 2) return;
+      const updatedSearchParams = { ...searchParams };
+
+      console.log(updatedPriceRange, MIN_PRICE_RANGE, MAX_PRICE_RANGE);
+      if (
+        updatedPriceRange[0] === MIN_PRICE_RANGE &&
+        updatedPriceRange[1] === MAX_PRICE_RANGE
+      ) {
+        delete updatedSearchParams["priceRange"];
+      } else {
+        updatedSearchParams.priceRange = updatedPriceRange;
+      }
 
       navigate({
         to: "/products",
-        search: { ...searchParams, priceRange: updatedPriceRange },
+        search: { ...updatedSearchParams },
         resetScroll: false,
       });
     },
@@ -81,14 +92,14 @@ export function PriceRangeFilter() {
     handleSliderChange(getPriceRangeFromURL());
   }, [getPriceRangeFromURL, handleSliderChange]);
 
-  const handleSliderChangeWithURLUpdate = (newValue: number[]) => {
+  const handleSliderChangeWithURLUpdate = (newValue: [number, number]) => {
     handleSliderChange(newValue);
     debouncedUpdateURLWithPriceRange(newValue);
   };
 
   const handleInputBlurWithURLUpdate = (value: string, index: number) => {
     validateAndUpdateValue(value, index);
-    debouncedUpdateURLWithPriceRange(sliderValue);
+    debouncedUpdateURLWithPriceRange(sliderValue as [number, number]);
   };
 
   return (

@@ -11,6 +11,7 @@ import {
 import {
   getAllProductsFn,
   getProductByIdFn,
+  getProductBySlugFn,
 } from "./server/functions/products";
 
 export const allCategoriesOptions = ({
@@ -34,6 +35,12 @@ export const productByIdOptions = ({ id }: { id: number }) =>
   queryOptions({
     queryKey: ["product", id],
     queryFn: () => getProductByIdFn({ data: id }),
+  });
+
+export const productBySlugOptions = ({ slug }: { slug: string }) =>
+  queryOptions({
+    queryKey: ["product", slug],
+    queryFn: () => getProductBySlugFn({ data: slug }),
   });
 
 export const allProductsOptions = ({
