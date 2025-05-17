@@ -8,9 +8,17 @@ import {
   Twitter,
 } from "lucide-react";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 
+import { allCategoriesOptions } from "@/features/products/products.queries";
+
 export function SiteFooter() {
+  const {
+    data: { categories },
+  } = useSuspenseQuery(
+    allCategoriesOptions({ values: { page: 1, pageSize: 10 } }),
+  );
   return (
     <>
       <footer className="bg-footer-background text-primary-foreground dark:text-foreground pt-16">
@@ -94,46 +102,16 @@ export function SiteFooter() {
             <div>
               <h3 className="mb-6 text-lg font-bold">Categories</h3>
               <ul className="space-y-3">
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-primary-foreground text-primary-foreground/80 dark:text-foreground/80 dark:hover:text-primary transition-colors"
-                  >
-                    Primary Care
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-primary-foreground text-primary-foreground/80 dark:text-foreground/80 dark:hover:text-primary transition-colors"
-                  >
-                    Specialized Clinic
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-primary-foreground text-primary-foreground/80 dark:text-foreground/80 dark:hover:text-primary transition-colors"
-                  >
-                    Diagnostics
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-primary-foreground text-primary-foreground/80 dark:text-foreground/80 dark:hover:text-primary transition-colors"
-                  >
-                    Pharmacy
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-primary-foreground text-primary-foreground/80 dark:text-foreground/80 dark:hover:text-primary transition-colors"
-                  >
-                    Health Checkups
-                  </a>
-                </li>
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      to="/products"
+                      className="hover:text-primary-foreground text-primary-foreground/80 dark:text-foreground/80 dark:hover:text-primary transition-colors"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -155,7 +133,7 @@ export function SiteFooter() {
                 <li className="flex">
                   <Mail className="text-primary-foreground dark:text-foreground mr-3 h-5 w-5 flex-shrink-0" />
                   <span className="text-primary-foreground/80 dark:text-foreground/80">
-                    meridian.sewa@gmail.com
+                    janani@gmail.com
                   </span>
                 </li>
               </ul>

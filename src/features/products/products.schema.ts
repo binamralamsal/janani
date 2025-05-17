@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-import {
-  DATATABLE_PAGE_SIZE,
-  MAX_PRICE_RANGE,
-  MIN_PRICE_RANGE,
-} from "@/config/constants";
+import { DATATABLE_PAGE_SIZE } from "@/config/constants";
 import { coerceToNumberSchema } from "@/util/zod-coerce-to-number-schema";
 
 export const categorySchema = z.object({
@@ -90,11 +86,10 @@ export const getAllProductsSchema = z.object({
     .max(2)
     .nonempty()
     .optional()
-    .default([MIN_PRICE_RANGE, MAX_PRICE_RANGE])
-    .refine((val) => val.length === 2 && val[0] < val[1], {
+    .refine((val) => (val ? val.length === 2 && val[0] < val[1] : true), {
       message: "priceRange must be a tuple [number, number] with min < max",
     })
-    .catch([MIN_PRICE_RANGE, MAX_PRICE_RANGE]),
+    .catch(undefined),
 });
 export type GetAllProductsSchema = z.infer<typeof getAllProductsSchema>;
 
