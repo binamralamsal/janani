@@ -36,7 +36,7 @@ function Home() {
           to="/admin/products"
           className="group relative grid place-items-center gap-2 py-40 transition md:py-48 lg:py-52"
         >
-          <div className="absolute top-0 right-0 bottom-0 left-0 -z-10 bg-[url('https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover brightness-75 transition duration-300 group-hover:brightness-[0.6]"></div>
+          <div className="absolute top-0 right-0 bottom-0 left-0 -z-10 bg-[url('https://unsplash.com/photos/bRdRUUtbxO0/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzQ3NDk5MjI2fA&force=true&w=640')] bg-cover brightness-75 transition duration-300 group-hover:brightness-[0.6]"></div>
           <div className="text-3xl font-bold text-white md:text-4xl lg:text-5xl">
             Vegetables
           </div>
@@ -58,7 +58,7 @@ function Home() {
           to="/products"
           className="group relative grid place-items-center gap-2 py-40 transition md:py-48 lg:py-52"
         >
-          <div className="absolute top-0 right-0 bottom-0 left-0 -z-10 bg-[url('https://images.unsplash.com/photo-1628543108325-1c27cd7246b3?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover brightness-75 transition duration-300 group-hover:brightness-[0.6]"></div>
+          <div className="absolute top-0 right-0 bottom-0 left-0 -z-10 bg-[url('https://unsplash.com/photos/GzPWhY68g5M/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTR8fG1lYXR8ZW58MHx8fHwxNzQ3NTAxNDAyfDA&force=true&w=640')] bg-cover brightness-75 transition duration-300 group-hover:brightness-[0.6]"></div>
           <div className="text-3xl font-bold text-white md:text-4xl lg:text-5xl">
             Meat
           </div>
@@ -80,9 +80,9 @@ function Home() {
           to="/products"
           className="group relative grid place-items-center gap-2 py-40 transition md:py-48 lg:py-52"
         >
-          <div className="absolute top-0 right-0 bottom-0 left-0 -z-10 bg-[url('https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFpcnl8ZW58MHx8MHx8fDA%3D')] bg-cover bg-bottom brightness-90 transition duration-300 group-hover:brightness-[0.8]"></div>
+          <div className="absolute top-0 right-0 bottom-0 left-0 -z-10 bg-[url('https://unsplash.com/photos/_8bnn1GqX70/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzQ3NDk3OTYxfA&force=true&w=640')] bg-cover bg-bottom brightness-90 transition duration-300 group-hover:brightness-[0.8]"></div>
           <div className="text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-            Diary
+            Dairy
           </div>
 
           <Button
@@ -92,7 +92,7 @@ function Home() {
             asChild
           >
             <div>
-              <span>Shop Diary</span>
+              <span>Shop Dairy</span>
               <MoveRightIcon className="transition duration-300 group-hover:translate-x-1" />
             </div>
           </Button>

@@ -21,6 +21,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminProductsRouteImport } from './routes/admin/products'
 import { Route as AdminProductCategoriesRouteImport } from './routes/admin/product-categories'
 import { Route as AdminDoctorsRouteImport } from './routes/admin/doctors'
+import { Route as AdminContactEntriesRouteImport } from './routes/admin/contact-entries'
 import { Route as AdminBlogsRouteImport } from './routes/admin/blogs'
 import { Route as MainServicesRouteImport } from './routes/_main/services'
 import { Route as MainProductsRouteImport } from './routes/_main/products'
@@ -83,6 +84,12 @@ const AdminProductCategoriesRoute = AdminProductCategoriesRouteImport.update({
 const AdminDoctorsRoute = AdminDoctorsRouteImport.update({
   id: '/doctors',
   path: '/doctors',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminContactEntriesRoute = AdminContactEntriesRouteImport.update({
+  id: '/contact-entries',
+  path: '/contact-entries',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -236,6 +243,13 @@ declare module '@tanstack/react-router' {
       path: '/blogs'
       fullPath: '/admin/blogs'
       preLoaderRoute: typeof AdminBlogsRouteImport
+      parentRoute: typeof AdminRouteRouteImport
+    }
+    '/admin/contact-entries': {
+      id: '/admin/contact-entries'
+      path: '/contact-entries'
+      fullPath: '/admin/contact-entries'
+      preLoaderRoute: typeof AdminContactEntriesRouteImport
       parentRoute: typeof AdminRouteRouteImport
     }
     '/admin/doctors': {
@@ -420,6 +434,15 @@ declare module './routes/admin/blogs' {
     FileRoutesByPath['/admin/blogs']['fullPath']
   >
 }
+declare module './routes/admin/contact-entries' {
+  const createFileRoute: CreateFileRoute<
+    '/admin/contact-entries',
+    FileRoutesByPath['/admin/contact-entries']['parentRoute'],
+    FileRoutesByPath['/admin/contact-entries']['id'],
+    FileRoutesByPath['/admin/contact-entries']['path'],
+    FileRoutesByPath['/admin/contact-entries']['fullPath']
+  >
+}
 declare module './routes/admin/doctors' {
   const createFileRoute: CreateFileRoute<
     '/admin/doctors',
@@ -584,6 +607,7 @@ const MainRouteRouteWithChildren = MainRouteRoute._addFileChildren(
 
 interface AdminRouteRouteChildren {
   AdminBlogsRoute: typeof AdminBlogsRoute
+  AdminContactEntriesRoute: typeof AdminContactEntriesRoute
   AdminDoctorsRoute: typeof AdminDoctorsRoute
   AdminProductCategoriesRoute: typeof AdminProductCategoriesRoute
   AdminProductsRoute: typeof AdminProductsRoute
@@ -601,6 +625,7 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminBlogsRoute: AdminBlogsRoute,
+  AdminContactEntriesRoute: AdminContactEntriesRoute,
   AdminDoctorsRoute: AdminDoctorsRoute,
   AdminProductCategoriesRoute: AdminProductCategoriesRoute,
   AdminProductsRoute: AdminProductsRoute,
@@ -629,6 +654,7 @@ export interface FileRoutesByFullPath {
   '/products': typeof MainProductsRoute
   '/services': typeof MainServicesRoute
   '/admin/blogs': typeof AdminBlogsRoute
+  '/admin/contact-entries': typeof AdminContactEntriesRoute
   '/admin/doctors': typeof AdminDoctorsRoute
   '/admin/product-categories': typeof AdminProductCategoriesRoute
   '/admin/products': typeof AdminProductsRoute
@@ -653,6 +679,7 @@ export interface FileRoutesByTo {
   '/products': typeof MainProductsRoute
   '/services': typeof MainServicesRoute
   '/admin/blogs': typeof AdminBlogsRoute
+  '/admin/contact-entries': typeof AdminContactEntriesRoute
   '/admin/doctors': typeof AdminDoctorsRoute
   '/admin/product-categories': typeof AdminProductCategoriesRoute
   '/admin/products': typeof AdminProductsRoute
@@ -680,6 +707,7 @@ export interface FileRoutesById {
   '/_main/products': typeof MainProductsRoute
   '/_main/services': typeof MainServicesRoute
   '/admin/blogs': typeof AdminBlogsRoute
+  '/admin/contact-entries': typeof AdminContactEntriesRoute
   '/admin/doctors': typeof AdminDoctorsRoute
   '/admin/product-categories': typeof AdminProductCategoriesRoute
   '/admin/products': typeof AdminProductsRoute
@@ -708,6 +736,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/services'
     | '/admin/blogs'
+    | '/admin/contact-entries'
     | '/admin/doctors'
     | '/admin/product-categories'
     | '/admin/products'
@@ -731,6 +760,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/services'
     | '/admin/blogs'
+    | '/admin/contact-entries'
     | '/admin/doctors'
     | '/admin/product-categories'
     | '/admin/products'
@@ -756,6 +786,7 @@ export interface FileRouteTypes {
     | '/_main/products'
     | '/_main/services'
     | '/admin/blogs'
+    | '/admin/contact-entries'
     | '/admin/doctors'
     | '/admin/product-categories'
     | '/admin/products'
@@ -814,6 +845,7 @@ export const routeTree = rootRoute
       "filePath": "admin/route.tsx",
       "children": [
         "/admin/blogs",
+        "/admin/contact-entries",
         "/admin/doctors",
         "/admin/product-categories",
         "/admin/products",
@@ -851,6 +883,10 @@ export const routeTree = rootRoute
     },
     "/admin/blogs": {
       "filePath": "admin/blogs.tsx",
+      "parent": "/admin"
+    },
+    "/admin/contact-entries": {
+      "filePath": "admin/contact-entries.tsx",
       "parent": "/admin"
     },
     "/admin/doctors": {

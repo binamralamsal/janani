@@ -1,6 +1,7 @@
 import {
   BoxesIcon,
   ChevronRightIcon,
+  Contact2Icon,
   HomeIcon,
   PackageIcon,
   PackagePlusIcon,
@@ -109,6 +110,17 @@ export const sidebarItems: SidebarGroupItem[] = [
             icon: PackagePlusIcon,
           },
         ],
+      },
+    ],
+  },
+
+  {
+    label: "Inquiries Management",
+    items: [
+      {
+        title: "Contact Entries",
+        url: "/admin/contact-entries",
+        icon: Contact2Icon,
       },
     ],
   },
