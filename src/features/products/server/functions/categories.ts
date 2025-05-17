@@ -31,7 +31,7 @@ export const saveCategoryFn = createServerFn()
         return {
           status: "ERROR",
           message:
-            "A category with this slug already exists. Please try a slug.",
+            "A category with this slug already exists. Please try a different slug.",
         };
       }
 
@@ -102,6 +102,18 @@ export const getAllCategoriesFn = createServerFn({ method: "GET" })
         totalPages,
       },
     };
+  });
+
+export const getCategoryByIdFn = createServerFn({ method: "GET" })
+  .validator(z.number().int().positive())
+  .handler(async ({ data }) => {
+    const result = await db
+      .selectFrom("categories")
+      .selectAll()
+      .where("id", "=", data)
+      .executeTakeFirst();
+
+    return result;
   });
 
 export const deleteCategoryFn = createServerFn()

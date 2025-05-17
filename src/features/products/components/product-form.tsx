@@ -1,12 +1,19 @@
 import { LoaderCircleIcon, TrashIcon, XIcon } from "lucide-react";
+import { toast } from "sonner";
 
-import { Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 
+import { useStore } from "@tanstack/react-form";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
+
+import { productByIdOptions } from "../products.queries";
 import {
   ProductSchema,
   ProductSchemaInput,
   productSchema,
 } from "../products.schema";
+import { saveProductFn } from "../server/functions/products";
 
 import { AdminPageWrapper } from "@/components/admin-page-wrapper";
 import {
@@ -39,12 +46,17 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+import { slugify } from "@/lib/slugify";
+
 export function ProductForm(props: {
   id?: number;
   categories: { id: number; name: string }[];
   images?: UploadedFile[];
   defaultValues?: ProductSchema;
 }) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const form = useAppForm({
     defaultValues:
       props.defaultValues ||
@@ -61,7 +73,31 @@ export function ProductForm(props: {
     validators: {
       onChange: productSchema,
     },
+    onSubmit: async ({ value }) => {
+      const response = await saveProductFn({
+        data: { values: value, id: props.id },
+      });
+
+      if (response.status === "SUCCESS") {
+        toast.success(response.message);
+        if (!props.id) navigate({ to: "/admin/products" });
+        else
+          await queryClient.invalidateQueries(
+            productByIdOptions({ id: props.id }),
+          );
+      } else {
+        toast.error(response.message);
+      }
+    },
   });
+
+  const nameValue = useStore(form.store, (store) => store.values.name);
+
+  useEffect(() => {
+    const slug = slugify(nameValue);
+
+    form.setFieldValue("slug", slug);
+  }, [nameValue]);
 
   const pageTitle = props.id
     ? `Edit ${props.defaultValues?.name} Product`
@@ -87,7 +123,7 @@ export function ProductForm(props: {
               <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                 <Card className="container px-0">
                   <CardHeader>
-                    <CardTitle>Product Details</CardTitle>
+                    <CardTitle className="text-xl">Product Details</CardTitle>
                     <CardDescription>
                       Add a new product by entering suitable name, slug,
                       description, category, price, and so on.
@@ -177,9 +213,11 @@ export function ProductForm(props: {
                         name="unit"
                         children={(field) => (
                           <field.FormItem>
-                            <field.FormLabel>Unit</field.FormLabel>
+                            <field.FormLabel className="gap-1">
+                              Unit <span className="text-destructive">*</span>
+                            </field.FormLabel>
                             <field.FormControl>
-                              <Input
+                              <InputWithStartIcon
                                 type="text"
                                 placeholder="kg"
                                 name={field.name}
@@ -188,7 +226,10 @@ export function ProductForm(props: {
                                 onChange={(e) => {
                                   field.handleChange(e.target.value);
                                 }}
-                              />
+                                className="ps-10"
+                              >
+                                per
+                              </InputWithStartIcon>
                             </field.FormControl>
                             <field.FormMessage />
                             <field.FormDescription>
@@ -252,9 +293,10 @@ export function ProductForm(props: {
                   x-chunk="dashboard-07-chunk-4"
                 >
                   <CardHeader>
-                    <CardTitle>Product Images</CardTitle>
+                    <CardTitle className="text-xl">Product Images</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
+                      Upload and manage images that represent this product in
+                      your store.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -287,9 +329,13 @@ export function ProductForm(props: {
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Product Status</CardTitle>
+                    <CardTitle className="text-xl">Product Metadata</CardTitle>
+                    <CardDescription>
+                      Organize and control how the product appears in your
+                      catalog.
+                    </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="grid gap-6">
                     <form.AppField
                       name="status"
                       children={(field) => (
@@ -325,13 +371,6 @@ export function ProductForm(props: {
                         </field.FormItem>
                       )}
                     />
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Category</CardTitle>
-                  </CardHeader>
-                  <CardContent>
                     <form.AppField
                       name="categoryId"
                       children={(field) => (
@@ -340,7 +379,11 @@ export function ProductForm(props: {
 
                           <Select
                             value={String(field.state.value)}
-                            onValueChange={(v) => (v === "null" ? null : +v)}
+                            onValueChange={(v) =>
+                              field.handleChange(
+                                v === "null" ? null : Number(v),
+                              )
+                            }
                           >
                             <field.FormControl>
                               <SelectTrigger

@@ -88,7 +88,7 @@ function RouteComponent() {
         >
           <Card className="container px-0">
             <CardHeader>
-              <CardTitle>Add User</CardTitle>
+              <CardTitle className="text-xl">Add User</CardTitle>
               <CardDescription>
                 Add a new user by entering their name, email, role, and password
               </CardDescription>
@@ -99,7 +99,9 @@ function RouteComponent() {
                   name="name"
                   children={(field) => (
                     <field.FormItem>
-                      <field.FormLabel>Name</field.FormLabel>
+                      <field.FormLabel className="gap-1">
+                        Name <span className="text-destructive">*</span>
+                      </field.FormLabel>
                       <field.FormControl>
                         <Input
                           type="Name"
@@ -119,7 +121,9 @@ function RouteComponent() {
                   name="email"
                   children={(field) => (
                     <field.FormItem>
-                      <field.FormLabel>Email</field.FormLabel>
+                      <field.FormLabel>
+                        Email <span className="text-destructive">*</span>
+                      </field.FormLabel>
                       <field.FormControl>
                         <Input
                           type="email"
@@ -174,7 +178,9 @@ function RouteComponent() {
                   name="password"
                   children={(field) => (
                     <field.FormItem>
-                      <field.FormLabel>Password</field.FormLabel>
+                      <field.FormLabel className="gap-1">
+                        Password <span className="text-destructive">*</span>
+                      </field.FormLabel>
                       <field.FormControl>
                         <PasswordInput
                           placeholder="********"
@@ -196,7 +202,10 @@ function RouteComponent() {
                   name="confirmPassword"
                   children={(field) => (
                     <field.FormItem>
-                      <field.FormLabel>Confirm Password</field.FormLabel>
+                      <field.FormLabel className="gap-1">
+                        Confirm Password
+                        <span className="text-destructive">*</span>
+                      </field.FormLabel>
                       <field.FormControl>
                         <PasswordInput
                           placeholder="********"

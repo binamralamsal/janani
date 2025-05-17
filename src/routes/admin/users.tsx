@@ -36,7 +36,7 @@ function RouteComponent() {
       <Card className="container px-0">
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-2">
-            <CardTitle>Users</CardTitle>
+            <CardTitle className="text-xl">Users</CardTitle>
             <CardDescription>
               <p>Here are the list of users</p>
             </CardDescription>
@@ -53,6 +53,7 @@ function RouteComponent() {
             filters={[
               {
                 accessorKey: "role",
+                queryKey: "role",
                 title: "Roles",
                 options: [
                   { label: "Admin", value: "admin" },

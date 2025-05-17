@@ -4,8 +4,10 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 
 import { useStore } from "@tanstack/react-form";
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 
+import { categoryByIdOptions } from "../products.queries";
 import { CategorySchema, categorySchema } from "../products.schema";
 import { saveCategoryFn } from "../server/functions/categories";
 
@@ -29,6 +31,7 @@ export function CategoryForm(props: {
   defaultValues?: CategorySchema;
 }) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const form = useAppForm({
     defaultValues:
@@ -48,6 +51,11 @@ export function CategoryForm(props: {
       if (response.status === "SUCCESS") {
         toast.success(response.message);
         if (!props.id) navigate({ to: "/admin/product-categories" });
+        else {
+          await queryClient.invalidateQueries(
+            categoryByIdOptions({ id: props.id }),
+          );
+        }
       } else {
         toast.error(response.message);
       }
@@ -85,7 +93,7 @@ export function CategoryForm(props: {
         >
           <Card className="container px-0">
             <CardHeader>
-              <CardTitle>Add User</CardTitle>
+              <CardTitle className="text-xl">Add Category</CardTitle>
               <CardDescription>
                 Add a new category by entering suitable name, and slug.
               </CardDescription>
@@ -95,7 +103,9 @@ export function CategoryForm(props: {
                 name="name"
                 children={(field) => (
                   <field.FormItem>
-                    <field.FormLabel>Name</field.FormLabel>
+                    <field.FormLabel className="gap-1">
+                      Name <span className="text-destructive">*</span>
+                    </field.FormLabel>
                     <field.FormControl>
                       <Input
                         type="text"
@@ -117,7 +127,9 @@ export function CategoryForm(props: {
                 name="slug"
                 children={(field) => (
                   <field.FormItem>
-                    <field.FormLabel>Slug</field.FormLabel>
+                    <field.FormLabel className="gap-1">
+                      Slug <span className="text-destructive">*</span>
+                    </field.FormLabel>
                     <field.FormControl>
                       <Input
                         type="text"

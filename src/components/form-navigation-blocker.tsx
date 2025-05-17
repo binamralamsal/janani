@@ -61,7 +61,8 @@ export function FormNavigationBlocker() {
     shouldBlockFn: () => {
       return true;
     },
-    disabled: deepEqual(values, form.options.defaultValues),
+    disabled:
+      isSubmitSuccessful || deepEqual(values, form.options.defaultValues),
     withResolver: true,
   });
 

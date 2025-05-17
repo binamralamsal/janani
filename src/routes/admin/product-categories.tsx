@@ -36,7 +36,7 @@ function RouteComponent() {
       <Card className="container px-0">
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-2">
-            <CardTitle>Users</CardTitle>
+            <CardTitle className="text-xl">Categories</CardTitle>
             <CardDescription>
               <p>Here are the list of product categories</p>
             </CardDescription>

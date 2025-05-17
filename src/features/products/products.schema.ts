@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { DATATABLE_PAGE_SIZE } from "@/config/constants";
+import {
+  DATATABLE_PAGE_SIZE,
+  MAX_PRICE_RANGE,
+  MIN_PRICE_RANGE,
+} from "@/config/constants";
 import { coerceToNumberSchema } from "@/util/zod-coerce-to-number-schema";
 
 export const categorySchema = z.object({
@@ -44,9 +48,55 @@ export const getAllCategoriesSchema = z.object({
     .catch({ createdAt: "desc" }),
 });
 export type GetAllCategoriesSchema = z.infer<typeof getAllCategoriesSchema>;
-export type GetAllCategoriesSchemaInput = z.input<
-  typeof getAllCategoriesSchema
->;
+
+export const getAllProductsSchema = z.object({
+  page: z.number().int().min(1).optional().default(1).catch(1),
+  pageSize: z
+    .number()
+    .int()
+    .min(5)
+    .optional()
+    .default(DATATABLE_PAGE_SIZE)
+    .catch(DATATABLE_PAGE_SIZE),
+  search: z.string().optional(),
+  sort: z
+    .record(
+      z.enum([
+        "id",
+        "name",
+        "slug",
+        "price",
+        "unit",
+        "salePrice",
+        "status",
+        "category",
+        "createdAt",
+        "updatedAt",
+      ]),
+      z.enum(["asc", "desc"]),
+    )
+    .optional()
+    .default({ createdAt: "desc" })
+    .catch({ createdAt: "desc" }),
+  status: z
+    .array(z.enum(["draft", "published", "archived"]))
+    .optional()
+    .default([])
+    .catch([]),
+  categories: z.array(z.string()).optional().default([]).catch([]),
+  priceRange: z
+    .array(z.number())
+    .min(2)
+    .max(2)
+    .nonempty()
+    .optional()
+    .default([MIN_PRICE_RANGE, MAX_PRICE_RANGE])
+    .refine((val) => val.length === 2 && val[0] < val[1], {
+      message: "priceRange must be a tuple [number, number] with min < max",
+    })
+    .catch([MIN_PRICE_RANGE, MAX_PRICE_RANGE]),
+});
+export type GetAllProductsSchema = z.infer<typeof getAllProductsSchema>;
 
 export const productSchema = z.object({
   name: z

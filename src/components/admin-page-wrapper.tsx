@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from "react";
 
-import { LinkProps } from "@tanstack/react-router";
+import { Link, LinkProps } from "@tanstack/react-router";
 
 import {
   Breadcrumb,
@@ -40,8 +40,8 @@ export function AdminPageWrapper({
               {breadcrumbs?.map((breadcrumb) => (
                 <Fragment key={breadcrumb.href}>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href={breadcrumb.href}>
-                      {breadcrumb.label}
+                    <BreadcrumbLink asChild>
+                      <Link to={breadcrumb.href}>{breadcrumb.label}</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
 
