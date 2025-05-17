@@ -1,4 +1,4 @@
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { Outlet, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getCookie } from "@tanstack/react-start/server";
 
@@ -15,7 +15,7 @@ const getSidebarStateFn = createServerFn({ method: "GET" }).handler(() => {
   return { defaultOpen };
 });
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute({
   component: RouteComponent,
   beforeLoad: async ({ context, location }) => {
     const data =

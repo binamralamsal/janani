@@ -1,8 +1,7 @@
 import { LoaderCircleIcon } from "lucide-react";
 import { toast } from "sonner";
 
-import type {} from "@tanstack/react-form";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 
 import { AdminPageWrapper } from "@/components/admin-page-wrapper";
@@ -33,7 +32,7 @@ import {
 } from "@/features/auth/auth.schema";
 import { createUserFn } from "@/features/auth/server/functions/admin-user";
 
-export const Route = createFileRoute("/admin/users_/new")({
+export const Route = createFileRoute({
   component: RouteComponent,
 });
 

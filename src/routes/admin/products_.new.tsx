@@ -1,10 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
 
 import { ProductForm } from "@/features/products/components/product-form";
 import { allCategoriesOptions } from "@/features/products/products.queries";
 
-export const Route = createFileRoute("/admin/products_/new")({
+export const Route = createFileRoute({
   component: RouteComponent,
   loader: ({ context: { queryClient } }) => {
     queryClient.prefetchQuery(

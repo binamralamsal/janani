@@ -1,6 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-export const Route = createFileRoute("/admin/product-categories_/$id/edit")({
+export const Route = createFileRoute({
   component: RouteComponent,
 });
 

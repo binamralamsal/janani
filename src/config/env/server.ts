@@ -4,4 +4,4 @@ export const serverEnv = z
   .object({
     DATABASE_URL: z.string().min(1),
   })
-  .parse(process.env);
+  .parse({ DATABASE_URL: process.env.DATABASE_URL });

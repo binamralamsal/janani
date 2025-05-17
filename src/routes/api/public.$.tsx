@@ -3,9 +3,8 @@ import mime from "mime-types";
 import path from "path";
 
 import { json } from "@tanstack/react-start";
-import { createAPIFileRoute } from "@tanstack/react-start/api";
 
-export const APIRoute = createAPIFileRoute("/api/public/$")({
+export const ServerRoute = createServerFileRoute().methods({
   GET: async ({ request, params }) => {
     const { _splat: pathname } = params;
     if (!pathname)

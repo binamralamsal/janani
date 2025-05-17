@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 import { AdminPageWrapper } from "@/components/admin-page-wrapper";
 import { DataTable } from "@/components/data-table/data-table";
@@ -16,7 +16,7 @@ import { categoriesTableColumns } from "@/features/products/components/categorie
 import { allCategoriesOptions } from "@/features/products/products.queries";
 import { getAllCategoriesSchema } from "@/features/products/products.schema";
 
-export const Route = createFileRoute("/admin/product-categories")({
+export const Route = createFileRoute({
   component: RouteComponent,
   validateSearch: getAllCategoriesSchema,
   loaderDeps: ({ search }) => ({ search }),

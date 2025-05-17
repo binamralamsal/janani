@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 import { AdminPageWrapper } from "@/components/admin-page-wrapper";
 import { DataTable } from "@/components/data-table/data-table";
@@ -16,7 +16,7 @@ import { allUsersOptions } from "@/features/auth/auth.queries";
 import { getAllUsersSchema } from "@/features/auth/auth.schema";
 import { usersTableColumns } from "@/features/auth/components/users-table-columns";
 
-export const Route = createFileRoute("/admin/users")({
+export const Route = createFileRoute({
   component: RouteComponent,
   validateSearch: getAllUsersSchema,
   loaderDeps: ({ search }) => ({ search }),

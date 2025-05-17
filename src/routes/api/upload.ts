@@ -4,11 +4,10 @@ import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 
 import { json } from "@tanstack/react-start";
-import { createAPIFileRoute } from "@tanstack/react-start/api";
 
 import { db } from "@/config/db";
 
-export const APIRoute = createAPIFileRoute("/api/upload")({
+export const ServerRoute = createServerFileRoute().methods({
   POST: async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get("file") as File;

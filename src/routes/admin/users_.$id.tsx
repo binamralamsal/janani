@@ -9,7 +9,7 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 
 import {
@@ -91,7 +91,7 @@ import {
 import { logoutUserFn } from "@/features/auth/server/functions/user";
 import { cn } from "@/util/cn";
 
-export const Route = createFileRoute("/admin/users_/$id")({
+export const Route = createFileRoute({
   component: RouteComponent,
   loader: async ({ context: { queryClient }, params }) => {
     queryClient.prefetchQuery(getUserOptions(parseInt(params.id)));

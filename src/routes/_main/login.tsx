@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { redirect } from "@tanstack/react-router";
 
 import { currentUserSessionOptions } from "@/features/auth/auth.queries";
 import { LoginForm } from "@/features/auth/components/login-form";
 
-export const Route = createFileRoute("/_main/login")({
+export const Route = createFileRoute({
   component: RouteComponent,
   validateSearch: z.object({
     redirect_url: z.string().startsWith("/").optional().catch(undefined),
